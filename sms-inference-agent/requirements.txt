@@ -1,7 +1,4 @@
 fastapi
-uvicorn
-openai
+langchain-openai
 langgraph
-httpx
-pydantic
-python-dotenv
+langchain-core

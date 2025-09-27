@@ -1,0 +1,1 @@
+Encapsulates training logic: trains and saves models (Isolation Forest, XGBoost, NN)

@@ -1,0 +1,1 @@
+Manages model storage and metadata (versioning, retrieval, safe locations)

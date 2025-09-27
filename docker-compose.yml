@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+
+  data_service:
+    build: ./transaction-inference-agent/data_service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+  orchestration_service:
+    build: ./transaction-inference-agent/orchestration_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - sms_service
+    env_file:
+      - ./.env
+
+  model_store_service:
+    build: ./transaction-inference-agent/model_store_service
+    ports:
+      - "8004:8004"
+    env_file:
+      - ./.env
+
+  inference_service:
+    build: ./transaction-inference-agent/inference_service
+    ports:
+      - "8003:8003"
+    depends_on:
+      - data_service
+      - model_store_service
+    env_file:
+      - ./.env
+
+  trainer_service:
+    build: ./transaction-inference-agent/trainer_service
+    ports:
+      - "8002:8002"
+    depends_on:
+      - data_service
+      - model_store_service
+    env_file:
+      - ./.env
+
+  sms_service:
+    build: ./sms-inference-agent
+    ports:
+      - "8005:8005"
+    env_file:
+      - ./.env

@@ -1,0 +1,1 @@
+Handles data access: reading from PostgreSQL, preprocessing (scaling, encoding), data management.
