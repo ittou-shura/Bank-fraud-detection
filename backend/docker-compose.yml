@@ -59,3 +59,12 @@ services:
       - "8005:8005"
     env_file:
       - ./.env
+
+  api_service:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8001:8000"
+    env_file:
+      - ./.env
