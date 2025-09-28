@@ -1,36 +1,45 @@
-import os
-import boto3
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from botocore.exceptions import NoCredentialsError
+from huggingface_hub import hf_hub_download, upload_file
+import os
 
 app = FastAPI()
 
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-S3_BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
+HUGGING_FACE_TOKEN = os.getenv("HUGGING_FACE_TOKEN")
+HUGGING_FACE_REPO_ID = os.getenv("HUGGING_FACE_REPO_ID")
 
-s3_client = boto3.client(
-    's3',
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-)
+@app.post("/upload")
+async def upload_model(model: UploadFile = File(...)):
+    if not HUGGING_FACE_TOKEN or not HUGGING_FACE_REPO_ID:
+        raise HTTPException(status_code=500, detail="Hugging Face credentials not configured")
 
-@app.post("/upload/")
-async def upload_model(file: UploadFile = File(...)):
     try:
-        s3_client.upload_fileobj(file.file, S3_BUCKET_NAME, file.filename)
-        return {"message": "Model uploaded successfully"}
-    except NoCredentialsError:
-        raise HTTPException(status_code=401, detail="AWS credentials not found")
+        with open(model.filename, "wb") as buffer:
+            buffer.write(model.file.read())
+        
+        upload_file(
+            path_or_fileobj=model.filename,
+            path_in_repo=model.filename,
+            repo_id=HUGGING_FACE_REPO_ID,
+            repo_type="model",
+            token=HUGGING_FACE_TOKEN,
+        )
+        os.remove(model.filename)
+        return {"message": f"Model {model.filename} uploaded to Hugging Face Hub"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/download/{model_name}")
 async def download_model(model_name: str):
+    if not HUGGING_FACE_REPO_ID:
+        raise HTTPException(status_code=500, detail="Hugging Face repository not configured")
+    
     try:
-        response = s3_client.get_object(Bucket=S3_BUCKET_NAME, Key=model_name)
-        return response["Body"].read()
-    except NoCredentialsError:
-        raise HTTPException(status_code=401, detail="AWS credentials not found")
+        model_path = hf_hub_download(
+            repo_id=HUGGING_FACE_REPO_ID,
+            filename=model_name,
+            repo_type="model",
+            token=HUGGING_FACE_TOKEN,
+        )
+        return {"model_path": model_path}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
