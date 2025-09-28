@@ -1,48 +1,40 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MoreHorizontal, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal } from "lucide-react";
+
+const connectedBills = [
+  { type: "Electricity Bill", payee: "My private account" },
+  { type: "Water Bill", payee: "My private account" },
+  { type: "Trash/Recycling", payee: "My private account" },
+  { type: "Netflix", payee: "Our Account" },
+  { type: "Xfinity", payee: "Our Account" },
+  { type: "Spotify", payee: "My private account" },
+  { type: "Mortgage", payee: "Our Account" },
+  { type: "Auto Loans", payee: "Our Account" },
+  { type: "Auto insurance", payee: "Our Account" },
+  { type: "Health insurance", payee: "My private account" }
+];
+
+const receivedBills = [
+  { type: "Electricity Bill", payee: "My private account", amount: 110.24 },
+  { type: "Water Bill", payee: "My private account", amount: 70.86 },
+  { type: "Trash/Recycling", payee: "My private account", amount: 14.32 },
+  { type: "Netflix", payee: "Our Account", amount: 17.99 },
+  { type: "Xfinity", payee: "Our Account", amount: 25.00 },
+  { type: "Spotify", payee: "My private account", amount: 9.99 }
+];
 
 export default function Payments() {
-  const [selectedAccount, setSelectedAccount] = useState("private");
-
-  const connectedBills = [
-    { type: "Electricity Bill", payee: "My private account", action: "..." },
-    { type: "Water Bill", payee: "My private account", action: "..." },
-    { type: "Trash/Recycling", payee: "My private account", action: "..." },
-    { type: "Netflix", payee: "Our Account", action: "..." },
-    { type: "Xfinity", payee: "Our Account", action: "..." },
-    { type: "Spotify", payee: "My private account", action: "..." },
-    { type: "Mortgage", payee: "Our Account", action: "..." },
-    { type: "Auto Loans", payee: "Our Account", action: "..." },
-    { type: "Auto insurance", payee: "Our Account", action: "..." },
-    { type: "Health insurance", payee: "My private account", action: "..." }
-  ];
-
-  const receivedBills = [
-    { type: "Electricity Bill", payee: "My private account", amount: 110.24 },
-    { type: "Water Bill", payee: "My private account", amount: 70.86 },
-    { type: "Trash/Recycling", payee: "My private account", amount: 14.32 },
-    { type: "Netflix", payee: "Our Account", amount: 17.99 },
-    { type: "Xfinity", payee: "Our Account", amount: 25.00 },
-    { type: "Spotify", payee: "My private account", amount: 9.99 }
-  ];
-
   return (
     <div className="space-y-6">
-      {/* Page Header */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">Payments</h1>
-          <p className="text-muted-foreground">Send money and manage bills</p>
-        </div>
-        <Button variant="outline" className="gap-2">
-          Payee templates
-          <ChevronDown className="h-4 w-4" />
-        </Button>
+        <h1 className="text-2xl font-bold text-foreground">Payments</h1>
+        <Button>Payee templates</Button>
       </div>
 
       {/* New Payment Form */}
@@ -53,36 +45,38 @@ export default function Payments() {
         <CardContent className="space-y-6">
           {/* From Section */}
           <div className="space-y-4">
-            <Label className="text-sm font-medium text-muted-foreground">FROM</Label>
+            <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">From</Label>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <Label>SELECT ACCOUNT</Label>
-                <Select value={selectedAccount} onValueChange={setSelectedAccount}>
-                  <SelectTrigger className="bg-primary text-primary-foreground">
-                    <SelectValue placeholder="Select account" />
+              <div className="space-y-2">
+                <Label>Select Account</Label>
+                <Select defaultValue="private">
+                  <SelectTrigger>
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="private">My private account</SelectItem>
-                    <SelectItem value="main">Our Account</SelectItem>
-                    <SelectItem value="savings">Savings Account</SelectItem>
+                    <SelectItem value="joint">Our Account</SelectItem>
+                    <SelectItem value="savings">Savings</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
-              <div className="space-y-3">
-                <Label>ACCOUNT DETAILS</Label>
-                <div className="bg-muted/50 p-4 rounded-lg space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Available Balance:</span>
-                    <span className="font-medium">$10,854.00</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Account Number:</span>
-                    <span className="font-medium">6584965133</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Account Status:</span>
-                    <span className="font-medium text-success">Active</span>
+              
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Account Details</Label>
+                <div className="bg-accent rounded-lg p-4">
+                  <div className="grid grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <p className="text-muted-foreground">Available Balance:</p>
+                      <p className="font-semibold">$10,854.00</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Account Number:</p>
+                      <p className="font-semibold">65849652133</p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground">Account Status:</p>
+                      <Badge variant="secondary">Active</Badge>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -91,61 +85,65 @@ export default function Payments() {
 
           {/* To Section */}
           <div className="space-y-4">
-            <Label className="text-sm font-medium text-muted-foreground">TO</Label>
+            <Label className="text-sm font-medium text-muted-foreground uppercase tracking-wide">To</Label>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label>PAYEE NAME</Label>
+                <Label>Payee Name</Label>
                 <Input placeholder="Enter payee name" />
               </div>
               <div className="space-y-2">
-                <Label>DESTINATION ACCOUNT</Label>
+                <Label>Destination Account</Label>
                 <Input placeholder="Account number" />
               </div>
               <div className="space-y-2">
-                <Label>PAYEE ADDRESS</Label>
-                <Input placeholder="Enter address" />
+                <Label>Payee Address</Label>
+                <Input placeholder="Address" />
               </div>
             </div>
           </div>
 
-          {/* Amount Section */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="space-y-2">
-                <Label>AMOUNT</Label>
-                <div className="flex">
-                  <Input placeholder="0.00" className="rounded-r-none" />
-                  <Button variant="outline" className="rounded-l-none border-l-0 px-3">
-                    USD
-                  </Button>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>MODEL AND REFERENCE NUMBER</Label>
-                <Input placeholder="Reference" />
-              </div>
-              <div className="space-y-2">
-                <Label>PAYMENT CODE</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select code" />
+          {/* Amount and Details */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="space-y-2">
+              <Label>Amount</Label>
+              <div className="flex">
+                <Input placeholder="0.00" className="rounded-r-none" />
+                <Select defaultValue="usd">
+                  <SelectTrigger className="w-20 rounded-l-none border-l-0">
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="standard">Standard</SelectItem>
-                    <SelectItem value="urgent">Urgent</SelectItem>
-                    <SelectItem value="international">International</SelectItem>
+                    <SelectItem value="usd">USD</SelectItem>
+                    <SelectItem value="eur">EUR</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label>PAYMENT PURPOSE</Label>
-                <Input placeholder="Purpose" />
-              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Model and Reference Number</Label>
+              <Input placeholder="Reference" />
+            </div>
+            <div className="space-y-2">
+              <Label>Payment Code</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select code" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="bills">Bills</SelectItem>
+                  <SelectItem value="transfer">Transfer</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Payment Purpose</Label>
+              <Input placeholder="Purpose" />
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end gap-3">
+          <div className="flex justify-end space-x-3">
             <Button variant="outline">Cancel</Button>
             <Button>Pay</Button>
           </div>
@@ -160,20 +158,14 @@ export default function Payments() {
             <CardTitle>Connected Bills</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-1">
-              {/* Header */}
-              <div className="grid grid-cols-3 gap-4 text-xs font-medium text-muted-foreground py-2 border-b">
-                <span>BILL TYPE</span>
-                <span>PAYEE</span>
-                <span>ACTION</span>
-              </div>
-              
-              {/* Bills List */}
+            <div className="space-y-3">
               {connectedBills.map((bill, index) => (
-                <div key={index} className="grid grid-cols-3 gap-4 py-3 text-sm border-b border-border/50">
-                  <span className="font-medium">{bill.type}</span>
-                  <span className="text-muted-foreground">{bill.payee}</span>
-                  <Button variant="ghost" size="sm" className="justify-start p-0 h-auto">
+                <div key={index} className="flex items-center justify-between py-2">
+                  <div className="space-y-1">
+                    <p className="font-medium text-sm">{bill.type}</p>
+                    <p className="text-xs text-muted-foreground">{bill.payee}</p>
+                  </div>
+                  <Button variant="ghost" size="sm">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </div>
@@ -188,22 +180,17 @@ export default function Payments() {
             <CardTitle>Received Bills</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-1">
-              {/* Header */}
-              <div className="grid grid-cols-4 gap-4 text-xs font-medium text-muted-foreground py-2 border-b">
-                <span>BILL TYPE</span>
-                <span>PAYEE</span>
-                <span>AMOUNT</span>
-                <span>ACTION</span>
-              </div>
-              
-              {/* Bills List */}
+            <div className="space-y-3">
               {receivedBills.map((bill, index) => (
-                <div key={index} className="grid grid-cols-4 gap-4 py-3 text-sm border-b border-border/50 items-center">
-                  <span className="font-medium">{bill.type}</span>
-                  <span className="text-muted-foreground">{bill.payee}</span>
-                  <span className="font-medium">${bill.amount}</span>
-                  <Button size="sm" className="text-xs">Pay bill</Button>
+                <div key={index} className="flex items-center justify-between py-2">
+                  <div className="space-y-1">
+                    <p className="font-medium text-sm">{bill.type}</p>
+                    <p className="text-xs text-muted-foreground">{bill.payee}</p>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <span className="font-semibold">${bill.amount}</span>
+                    <Button size="sm">Pay bill</Button>
+                  </div>
                 </div>
               ))}
             </div>

@@ -1,39 +1,33 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { 
-  User, 
-  Shield, 
-  Bell, 
-  CreditCard, 
-  Globe, 
-  Smartphone,
-  Mail,
-  Lock
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { User, Bell, Shield, CreditCard, Globe, Smartphone, Mail } from "lucide-react";
 
 export default function Settings() {
   return (
     <div className="space-y-6">
-      {/* Page Header */}
+      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground">Manage your account preferences and security</p>
+        <p className="text-muted-foreground">Manage your account preferences and security settings</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Profile Settings */}
+        {/* Main Settings */}
         <div className="lg:col-span-2 space-y-6">
+          {/* Profile Settings */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
+              <CardTitle className="flex items-center">
+                <User className="h-5 w-5 mr-2" />
                 Profile Information
               </CardTitle>
+              <CardDescription>Update your personal details and contact information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -46,22 +40,22 @@ export default function Settings() {
                   <Input id="lastName" defaultValue="Black" />
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
-                <Input id="email" type="email" defaultValue="sarah.black@email.com" />
+                <Input id="email" type="email" defaultValue="sarah.black@example.com" />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="phone">Phone Number</Label>
                 <Input id="phone" defaultValue="+1 (555) 123-4567" />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="address">Address</Label>
-                <Input id="address" defaultValue="123 Main St, Anytown, ST 12345" />
+                <Input id="address" defaultValue="123 Main Street, New York, NY 10001" />
               </div>
-              
+
               <Button>Save Changes</Button>
             </CardContent>
           </Card>
@@ -69,46 +63,66 @@ export default function Settings() {
           {/* Security Settings */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Security & Authentication
+              <CardTitle className="flex items-center">
+                <Shield className="h-5 w-5 mr-2" />
+                Security & Privacy
               </CardTitle>
+              <CardDescription>Manage your account security and privacy preferences</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="currentPassword">Current Password</Label>
-                  <Input id="currentPassword" type="password" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="newPassword">New Password</Label>
-                  <Input id="newPassword" type="password" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm New Password</Label>
-                  <Input id="confirmPassword" type="password" />
-                </div>
-                <Button variant="outline">Change Password</Button>
-              </div>
-              
-              <Separator />
-              
-              <div className="space-y-4">
-                <h3 className="font-medium">Two-Factor Authentication</h3>
                 <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">SMS Authentication</p>
-                    <p className="text-xs text-muted-foreground">Receive codes via text message</p>
+                  <div className="space-y-0.5">
+                    <Label>Two-Factor Authentication</Label>
+                    <p className="text-sm text-muted-foreground">Add an extra layer of security to your account</p>
                   </div>
                   <Switch defaultChecked />
                 </div>
-                
+
+                <Separator />
+
                 <div className="flex items-center justify-between">
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium">Authenticator App</p>
-                    <p className="text-xs text-muted-foreground">Use an authenticator app</p>
+                  <div className="space-y-0.5">
+                    <Label>Login Notifications</Label>
+                    <p className="text-sm text-muted-foreground">Get notified of new sign-ins to your account</p>
                   </div>
-                  <Switch />
+                  <Switch defaultChecked />
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <Label>Password</Label>
+                  <Button variant="outline">Change Password</Button>
+                  <p className="text-sm text-muted-foreground">Last changed 3 months ago</p>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-3">
+                  <Label>Active Sessions</Label>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-3 border border-border rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Smartphone className="h-4 w-4 text-muted-foreground" />
+                        <div>
+                          <p className="font-medium text-sm">MacBook Pro</p>
+                          <p className="text-xs text-muted-foreground">New York, NY • Active now</p>
+                        </div>
+                      </div>
+                      <Badge>Current</Badge>
+                    </div>
+                    <div className="flex items-center justify-between p-3 border border-border rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Smartphone className="h-4 w-4 text-muted-foreground" />
+                        <div>
+                          <p className="font-medium text-sm">iPhone 13</p>
+                          <p className="text-xs text-muted-foreground">New York, NY • 2 hours ago</p>
+                        </div>
+                      </div>
+                      <Button variant="ghost" size="sm">Revoke</Button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -117,85 +131,44 @@ export default function Settings() {
           {/* Notification Settings */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Bell className="h-5 w-5" />
+              <CardTitle className="flex items-center">
+                <Bell className="h-5 w-5 mr-2" />
                 Notifications
               </CardTitle>
+              <CardDescription>Configure how you want to receive notifications</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Transaction Alerts</p>
-                  <p className="text-xs text-muted-foreground">Get notified of all transactions</p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Transaction Alerts</Label>
+                    <p className="text-sm text-muted-foreground">Get notified of all account transactions</p>
+                  </div>
+                  <Switch defaultChecked />
                 </div>
-                <Switch defaultChecked />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Large Transaction Alerts</p>
-                  <p className="text-xs text-muted-foreground">Transactions over $1,000</p>
-                </div>
-                <Switch defaultChecked />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Bill Reminders</p>
-                  <p className="text-xs text-muted-foreground">Upcoming bill payments</p>
-                </div>
-                <Switch defaultChecked />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Low Balance Alerts</p>
-                  <p className="text-xs text-muted-foreground">When balance falls below $500</p>
-                </div>
-                <Switch />
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">Marketing Emails</p>
-                  <p className="text-xs text-muted-foreground">Product updates and offers</p>
-                </div>
-                <Switch />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Sidebar Settings */}
-        <div className="space-y-6">
-          {/* Account Summary */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Account Summary</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="text-center space-y-2">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                  <User className="h-8 w-8 text-primary" />
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Bill Reminders</Label>
+                    <p className="text-sm text-muted-foreground">Reminders for upcoming bill payments</p>
+                  </div>
+                  <Switch defaultChecked />
                 </div>
-                <h3 className="font-medium">Sarah J. Black</h3>
-                <p className="text-sm text-muted-foreground">Premium Account</p>
-              </div>
-              
-              <Separator />
-              
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Member Since</span>
-                  <span>January 2021</span>
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Security Alerts</Label>
+                    <p className="text-sm text-muted-foreground">Important security and account notifications</p>
+                  </div>
+                  <Switch defaultChecked />
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Account Status</span>
-                  <span className="text-success">Active</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Last Login</span>
-                  <span>Today, 9:32 AM</span>
+
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label>Marketing Emails</Label>
+                    <p className="text-sm text-muted-foreground">Product updates and promotional content</p>
+                  </div>
+                  <Switch />
                 </div>
               </div>
             </CardContent>
@@ -204,42 +177,45 @@ export default function Settings() {
           {/* Preferences */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Globe className="h-5 w-5" />
+              <CardTitle className="flex items-center">
+                <Globe className="h-5 w-5 mr-2" />
                 Preferences
               </CardTitle>
+              <CardDescription>Customize your banking experience</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Language</Label>
-                <Select defaultValue="en">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="es">Spanish</SelectItem>
-                    <SelectItem value="fr">French</SelectItem>
-                    <SelectItem value="de">German</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Language</Label>
+                  <Select defaultValue="en">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="en">English</SelectItem>
+                      <SelectItem value="es">Spanish</SelectItem>
+                      <SelectItem value="fr">French</SelectItem>
+                      <SelectItem value="de">German</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Currency</Label>
+                  <Select defaultValue="usd">
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="usd">USD ($)</SelectItem>
+                      <SelectItem value="eur">EUR (€)</SelectItem>
+                      <SelectItem value="gbp">GBP (£)</SelectItem>
+                      <SelectItem value="cad">CAD ($)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              
-              <div className="space-y-2">
-                <Label>Currency</Label>
-                <Select defaultValue="usd">
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="usd">USD ($)</SelectItem>
-                    <SelectItem value="eur">EUR (€)</SelectItem>
-                    <SelectItem value="gbp">GBP (£)</SelectItem>
-                    <SelectItem value="cad">CAD (C$)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
+
               <div className="space-y-2">
                 <Label>Time Zone</Label>
                 <Select defaultValue="est">
@@ -247,60 +223,99 @@ export default function Settings() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="est">Eastern Time</SelectItem>
-                    <SelectItem value="cst">Central Time</SelectItem>
-                    <SelectItem value="mst">Mountain Time</SelectItem>
-                    <SelectItem value="pst">Pacific Time</SelectItem>
+                    <SelectItem value="est">Eastern Time (EST)</SelectItem>
+                    <SelectItem value="pst">Pacific Time (PST)</SelectItem>
+                    <SelectItem value="cst">Central Time (CST)</SelectItem>
+                    <SelectItem value="mst">Mountain Time (MST)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </CardContent>
           </Card>
+        </div>
 
-          {/* Connected Devices */}
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Account Status */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Smartphone className="h-5 w-5" />
-                Connected Devices
+              <CardTitle>Account Status</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Account Type</span>
+                <Badge>Premium</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Member Since</span>
+                <span className="text-sm text-muted-foreground">Jan 2020</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Verification</span>
+                <Badge variant="default" className="bg-success text-success-foreground">Verified</Badge>
+              </div>
+              
+              <Button className="w-full" variant="outline">
+                Manage Account
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Connected Services */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <CreditCard className="h-4 w-4 mr-2" />
+                Connected Services
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
-                <div className="flex items-center gap-2">
-                  <Smartphone className="h-4 w-4" />
-                  <div>
-                    <p className="text-sm font-medium">iPhone 13</p>
-                    <p className="text-xs text-muted-foreground">Mobile App</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-blue-500 rounded flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">V</span>
                   </div>
+                  <span className="text-sm font-medium">Visa</span>
                 </div>
-                <Button variant="outline" size="sm">Remove</Button>
+                <Badge variant="outline">Connected</Badge>
               </div>
               
-              <div className="flex items-center justify-between p-2 rounded-lg bg-muted/50">
-                <div className="flex items-center gap-2">
-                  <Globe className="h-4 w-4" />
-                  <div>
-                    <p className="text-sm font-medium">Chrome Browser</p>
-                    <p className="text-xs text-muted-foreground">Web App</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-green-500 rounded flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">P</span>
                   </div>
+                  <span className="text-sm font-medium">PayPal</span>
                 </div>
-                <span className="text-xs text-success">Current</span>
+                <Button variant="outline" size="sm">Connect</Button>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-purple-500 rounded flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">S</span>
+                  </div>
+                  <span className="text-sm font-medium">Stripe</span>
+                </div>
+                <Button variant="outline" size="sm">Connect</Button>
               </div>
             </CardContent>
           </Card>
 
-          {/* Danger Zone */}
-          <Card className="border-error/20">
+          {/* Support */}
+          <Card>
             <CardHeader>
-              <CardTitle className="text-error">Danger Zone</CardTitle>
+              <CardTitle>Need Help?</CardTitle>
+              <CardDescription>Get support from our team</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button variant="outline" className="w-full border-error text-error hover:bg-error hover:text-error-foreground">
-                Deactivate Account
+              <Button variant="outline" className="w-full justify-start">
+                <Mail className="h-4 w-4 mr-2" />
+                Contact Support
               </Button>
-              <Button variant="outline" className="w-full border-error text-error hover:bg-error hover:text-error-foreground">
-                Close Account
+              <Button variant="outline" className="w-full justify-start">
+                <Bell className="h-4 w-4 mr-2" />
+                Help Center
               </Button>
             </CardContent>
           </Card>
